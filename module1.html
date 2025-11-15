@@ -1,121 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Module 1 – Word Discovery</title>
-<style>
-    body {
-        font-family: "Poppins", sans-serif;
-        background: linear-gradient(135deg, #7b5cff, #62b8f5);
-        margin: 0;
-        padding: 0;
-        color: #fff;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 1 – Vocabulary Learning</title>
 
-    .container {
-        max-width: 900px;
-        margin: 30px auto;
-        background: #ffffff;
-        color: #444;
-        padding: 30px;
-        border-radius: 20px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        text-align: center;
-    }
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f9ff;
+            padding: 20px;
+            margin: 0;
+        }
 
-    h1 {
-        color: #6a4df4;
-        font-size: 32px;
-    }
+        h1 {
+            text-align: center;
+            color: #005f73;
+        }
 
-    .word-card {
-        background: #f8f5ff;
-        padding: 15px;
-        border-radius: 12px;
-        margin: 15px 0;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        text-align: left;
-    }
+        .card {
+            background: white;
+            padding: 20px;
+            margin: 10px auto;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            cursor: pointer;
+        }
 
-    .word-title {
-        font-size: 22px;
-        font-weight: bold;
-        color: #5a2ff7;
-    }
+        .quiz-box {
+            background: #e0fbfc;
+            padding: 20px;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 15px;
+        }
 
-    .button-container {
-        margin-top: 20px;
-    }
+        button {
+            background: #0081a7;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
 
-    .btn {
-        background: #6a4df4;
-        color: #fff;
-        padding: 12px 20px;
-        border-radius: 10px;
-        text-decoration: none;
-        margin: 10px;
-        display: inline-block;
-        font-weight: bold;
-        transition: 0.3s;
-    }
+        button:hover {
+            background: #00afb9;
+        }
 
-    .btn:hover {
-        background: #5936f0;
-    }
-</style>
+        #result {
+            font-size: 18px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            display: block;
+            text-align: center;
+            margin-top: 40px;
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="container">
-    <h1>📘 Module 1: Word Discovery</h1>
-    <p>Learn new vocabulary words through definitions, examples, and fun activities!</p>
+<h1>Module 1: Vocabulary Learning</h1>
 
-    <div id="word-list"></div>
+<h2>🎯 Target Vocabulary: Grade 4 Level</h2>
+<p style="text-align:center;">Click each card to see the meaning.</p>
 
-    <div class="button-container">
-        <a class="btn" href="flashcards.html">🎴 Practice with Flashcards</a>
-        <a class="btn" href="matching-game.html">🧩 Play Matching Game</a>
-        <a class="btn" href="index.html">🏠 Back to Home</a>
-    </div>
+<!-- Flashcards -->
+<div class="card" onclick="flipCard(this)">
+    <strong>1. Enormous</strong>
+    <p class="definition" style="display:none;">Very, very big</p>
 </div>
 
+<div class="card" onclick="flipCard(this)">
+    <strong>2. Observe</strong>
+    <p class="definition" style="display:none;">To watch something carefully</p>
+</div>
+
+<div class="card" onclick="flipCard(this)">
+    <strong>3. Discover</strong>
+    <p class="definition" style="display:none;">To find something new</p>
+</div>
+
+<div class="card" onclick="flipCard(this)">
+    <strong>4. Predict</strong>
+    <p class="definition" style="display:none;">To say what will happen next</p>
+</div>
+
+<br>
+
+<h2>📝 Quick Quiz</h2>
+
+<div class="quiz-box">
+    <p><strong>What does "observe" mean?</strong></p>
+    <button onclick="checkAnswer('wrong')">To take a nap</button>
+    <button onclick="checkAnswer('correct')">To watch carefully</button>
+    <button onclick="checkAnswer('wrong')">To sing loudly</button>
+
+    <p id="result"></p>
+</div>
+
+<div class="back-btn">
+    <a href="index.html">
+        <button>⬅ Back to Home</button>
+    </a>
+</div>
+
+
 <script>
-let words = [
-    { word: "Brilliant", meaning: "Very smart or bright", example: "She had a brilliant idea for the project.", icon: "💡" },
-    { word: "Observe", meaning: "To watch carefully", example: "We observe the sky during science class.", icon: "🔭" },
-    { word: "Journey", meaning: "A long trip", example: "The journey to the mountains was exciting.", icon: "🗺️" },
-    { word: "Discover", meaning: "To find something new", example: "They discovered a hidden cave.", icon: "🕵️‍♂️" },
-    { word: "Gigantic", meaning: "Very large", example: "The elephant is a gigantic animal.", icon: "🐘" },
-    { word: "Whisper", meaning: "To speak very softly", example: "She whispered a secret to her friend.", icon: "🤫" },
-    { word: "Courage", meaning: "Bravery", example: "He showed courage during the storm.", icon: "🦁" },
-    { word: "Create", meaning: "To make something new", example: "Students create beautiful artwork.", icon: "🎨" },
-    { word: "Unique", meaning: "One of a kind", example: "Her drawing style is unique.", icon: "🌟" },
-    { word: "Predict", meaning: "To say what will happen", example: "Can you predict tomorrow’s weather?", icon: "🔮" },
-    { word: "Calm", meaning: "Peaceful and quiet", example: "The lake looked calm in the morning.", icon: "🕊️" },
-    { word: "Collect", meaning: "To gather items", example: "He collects special coins.", icon: "🪙" },
-    { word: "Assist", meaning: "To help someone", example: "The teacher assists students with homework.", icon: "🤝" },
-    { word: "Protect", meaning: "To keep safe", example: "A helmet protects your head.", icon: "🛡️" },
-    { word: "Explain", meaning: "To make something clear", example: "Can you explain the rules?", icon: "📘" },
-    { word: "Journey", meaning: "A long trip", example: "Their journey took 5 days.", icon: "🚗" },
-    { word: "Focus", meaning: "To pay attention", example: "Please focus on your writing.", icon: "🎯" },
-    { word: "Celebrate", meaning: "To enjoy a special event", example: "We celebrate birthdays together.", icon: "🎉" },
-    { word: "Frightened", meaning: "Scared", example: "The loud noise frightened the cat.", icon: "🐱" },
-    { word: "Confident", meaning: "Sure of yourself", example: "She felt confident before her exam.", icon: "💪" }
-];
+    // Flashcard flip
+    function flipCard(card) {
+        let def = card.querySelector(".definition");
+        def.style.display = def.style.display === "none" ? "block" : "none";
+    }
 
-let container = document.getElementById("word-list");
-
-words.forEach(item => {
-    container.innerHTML += `
-        <div class="word-card">
-            <div class="word-title">${item.icon} ${item.word}</div>
-            <p><strong>Meaning:</strong> ${item.meaning}</p>
-            <p><strong>Example:</strong> ${item.example}</p>
-        </div>
-    `;
-});
+    // Quiz Answer Check
+    function checkAnswer(status) {
+        let result = document.getElementById("result");
+        if (status === "correct") {
+            result.innerHTML = "✅ Correct! Great job!";
+            result.style.color = "green";
+        } else {
+            result.innerHTML = "❌ Try again!";
+            result.style.color = "red";
+        }
+    }
 </script>
 
 </body>
