@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flashcards — Module 1</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;background:linear-gradient(135deg,#7b5cff,#62b8f5);color:#222;margin:0;padding:40px;}
+  .wrap{max-width:760px;margin:0 auto;background:#fff;padding:24px;border-radius:14px;box-shadow:0 10px 25px rgba(0,0,0,0.15)}
+  h1{color:#6a4df4;margin-top:0}
+  .card{height:200px;border-radius:12px;background:#f8f5ff;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:700;cursor:pointer;transition:transform .25s}
+  .card.flipped{transform:rotateY(180deg)}
+  .meta{margin-top:16px;display:flex;justify-content:space-between;align-items:center}
+  .btn{background:#6a4df4;color:#fff;padding:10px 16px;border-radius:10px;text-decoration:none}
+  .small{font-size:14px;color:#666}
+  .controls{display:flex;gap:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🎴 Flashcards — Module 1</h1>
+  <p class="small">Click the card to flip. Say the meaning before flipping!</p>
+
+  <div id="card" class="card" aria-live="polite"></div>
+
+  <div class="meta">
+    <div class="controls">
+      <button id="prev" class="btn">◀ Prev</button>
+      <button id="flip" class="btn">Flip</button>
+      <button id="next" class="btn">Next ▶</button>
+    </div>
+    <div>
+      <span id="progress" class="small">0 / 0</span>
+      <a class="btn" href="Module1.html" style="background:#4db6ac;margin-left:12px">Back</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const words = [
+  {word:"Brilliant", meaning:"Very smart or bright", example:"She had a brilliant idea.", icon:"💡"},
+  {word:"Observe", meaning:"To watch carefully", example:"We observe the sky.", icon:"🔭"},
+  {word:"Journey", meaning:"A long trip", example:"The journey to the mountains.", icon:"🗺️"},
+  {word:"Discover", meaning:"To find something new", example:"They discovered a cave.", icon:"🕵️‍♂️"},
+  {word:"Gigantic", meaning:"Very large", example:"The elephant is gigantic.", icon:"🐘"},
+  {word:"Whisper", meaning:"To speak softly", example:"She whispered a secret.", icon:"🤫"},
+  {word:"Courage", meaning:"Bravery", example:"He showed courage.", icon:"🦁"},
+  {word:"Create", meaning:"To make something new", example:"Students create artwork.", icon:"🎨"},
+  {word:"Unique", meaning:"One of a kind", example:"Her style is unique.", icon:"🌟"},
+  {word:"Predict", meaning:"To say what will happen", example:"He predicted the rain.", icon:"🔮"},
+];
+
+let idx = 0;
+let flipped = false;
+const cardEl = document.getElementById('card');
+const progressEl = document.getElementById('progress');
+
+function render(){
+  const item = words[idx];
+  progressEl.textContent = (idx+1) + ' / ' + words.length;
+  if(!flipped){
+    cardEl.innerHTML = `<div>${item.icon} ${item.word}</div>`;
+  } else {
+    cardEl.innerHTML = `<div style="font-size:20px"><strong>Meaning:</strong> ${item.meaning}<br><em>${item.example}</em></div>`;
+  }
+}
+
+document.getElementById('flip').addEventListener('click', ()=>{ flipped = !flipped; cardEl.classList.toggle('flipped'); render(); });
+cardEl.addEventListener('click', ()=>{ flipped = !flipped; cardEl.classList.toggle('flipped'); render(); });
+
+document.getElementById('next').addEventListener('click', ()=>{ idx = (idx + 1) % words.length; flipped = false; cardEl.classList.remove('flipped'); render(); });
+document.getElementById('prev').addEventListener('click', ()=>{ idx = (idx - 1 + words.length) % words.length; flipped = false; cardEl.classList.remove('flipped'); render(); });
+
+render();
+</script>
+</body>
+</html>
