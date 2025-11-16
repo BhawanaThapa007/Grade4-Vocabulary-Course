@@ -1,106 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gamified Vocabulary Learning</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vocabulary Learning Adventure</title>
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #6f9aff, #a8e4ff);
+        text-align: center;
+    }
 
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #95c0ff, #b8a5ff);
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
+    .container {
+        margin-top: 80px;
+        background: white;
+        padding: 40px;
+        width: 90%;
+        max-width: 450px;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 20px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    }
 
-        .container {
-            margin: 60px auto;
-            width: 90%;
-            max-width: 500px;
-            background: white;
-            padding: 30px;
-            border-radius: 18px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-            animation: fadeIn 1.2s ease;
-        }
+    h1 {
+        font-size: 32px;
+        color: #003399;
+        margin-bottom: 10px;
+    }
 
-        h1 {
-            font-size: 28px;
-            color: #2c2c54;
-            margin-bottom: 10px;
-        }
+    p {
+        font-size: 18px;
+        color: #444;
+    }
 
-        p {
-            color: #444;
-            margin-bottom: 20px;
-        }
+    input {
+        width: 90%;
+        padding: 12px;
+        margin-top: 12px;
+        border-radius: 8px;
+        border: 2px solid #3f82ff;
+        font-size: 16px;
+    }
 
-        input {
-            width: 90%;
-            padding: 12px;
-            margin: 10px;
-            border-radius: 10px;
-            border: 1px solid #aaa;
-            font-size: 16px;
-        }
+    button {
+        margin-top: 20px;
+        padding: 14px 30px;
+        background: #0057ff;
+        color: white;
+        border: none;
+        font-size: 18px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
 
-        button {
-            width: 93%;
-            padding: 12px;
-            background: #3b7bff;
-            color: white;
-            font-size: 18px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            margin-top: 15px;
-        }
+    button:hover {
+        background: #003bb8;
+    }
 
-        button:hover {
-            background: #2f63d5;
-        }
+</style>
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+<script>
+function startLearning() {
+    const name = document.getElementById("studentName").value.trim();
+    const grade = document.getElementById("studentClass").value.trim();
+
+    if(!name || !grade){
+        alert("Please enter your name and class!");
+        return;
+    }
+
+    // Save data for module page
+    localStorage.setItem("studentName", name);
+    localStorage.setItem("studentClass", grade);
+
+    // Redirect to module 1
+    window.location.href = "module1.html";
+}
+</script>
+
 </head>
 
 <body>
 
-    <div class="container">
-        <h1>Welcome to Gamified Vocabulary Learning</h1>
-        <p>Enter your details to begin your learning adventure!</p>
+<div class="container">
+    <h1>🌟 Vocabulary Learning Adventure 🌟</h1>
+    <p>Enter details to begin your fun learning journey!</p>
 
-        <input type="text" id="studentName" placeholder="Enter your name" required>
-        <input type="text" id="studentGrade" placeholder="Enter your grade" required>
+    <input type="text" id="studentName" placeholder="Enter your name">
+    <input type="text" id="studentClass" placeholder="Enter your class">
 
-        <button onclick="startLearning()">Start Learning</button>
-    </div>
-
-    <script>
-        function startLearning() {
-            const name = document.getElementById('studentName').value.trim();
-            const grade = document.getElementById('studentGrade').value.trim();
-
-            if (name === "" || grade === "") {
-                alert("Please fill in both fields.");
-                return;
-            }
-
-            // Save to local storage for Module pages
-            localStorage.setItem("studentName", name);
-            localStorage.setItem("studentGrade", grade);
-
-            // Redirect correctly
-            window.location.href = "module1.html";
-        }
-    </script>
+    <button onclick="startLearning()">Start Learning</button>
+</div>
 
 </body>
 </html>
