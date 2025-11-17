@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>The Vocabulary Quest</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="brand"><div class="logo">VQ</div><div><div class="title">The Vocabulary Quest</div><div class="subtitle small">AI-ish • Gamified • Grade 4</div></div></div>
+      <div><a href="leaderboard.html" class="btn alt">Leaderboard</a></div>
+    </div>
+
+    <div class="card">
+      <h2>Welcome, young learner!</h2>
+      <p class="small">Enter your name and class to start — progress will be saved to your browser.</p>
+
+      <div style="margin-top:14px">
+        <input id="nameInput" class="input" placeholder="Your name">
+        <input id="classInput" class="input" placeholder="Your grade (e.g., 4)">
+        <div class="row"><button id="startBtn" class="btn">Start Learning</button><a class="btn alt" href="dashboard.html">Open Dashboard</a></div>
+      </div>
+    </div>
+
+    <div class="card module-preview">
+      <h3>Module 1: Word Discovery</h3>
+      <p class="small">Flashcards • Matching • Quiz — practice 20 upper-elementary words.</p>
+      <div class="row"><a class="btn" href="module1.html">Open Module 1</a></div>
+    </div>
+
+    <div class="card">
+      <h3>Quick actions</h3>
+      <div class="grid">
+        <div class="module-card">
+          <h3>Progress</h3>
+          <p class="small">Open your dashboard to see scores and badges.</p>
+        </div>
+        <div class="module-card">
+          <h3>Badges</h3>
+          <p class="small">Earn badges when you complete modules or score high.</p>
+        </div>
+        <div class="module-card">
+          <h3>Leaderboard</h3>
+          <p class="small">See top local learners on your device.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+<script src="script.js"></script>
+<script>
+document.getElementById("startBtn").addEventListener("click", ()=>{
+  const name = document.getElementById("nameInput").value.trim();
+  const klass = document.getElementById("classInput").value.trim();
+  if(!name || !klass){ alert("Please enter name and class"); return; }
+  Site.ensureUser(name, klass);
+  // initialize empty scores
+  Site.saveScores({module1:0,module2:0,module3:0});
+  // go to dashboard
+  window.location.href = "dashboard.html";
+});
+</script>
+</body>
+</html>
