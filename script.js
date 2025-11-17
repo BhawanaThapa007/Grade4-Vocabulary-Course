@@ -1,49 +1,38 @@
-/* script.js - shared site logic: user, progress, leaderboard, badges */
-const Site = (function(){
-  const KEY_USER = "vq_user";
-  const KEY_SCORES = "vq_scores";
-  const KEY_LEADER = "vq_leaderboard";
+// Save name and class
+function saveStudentInfo() {
+    const name = document.getElementById("studentName").value;
+    const grade = document.getElementById("studentClass").value;
 
-  function saveUser(obj){
-    localStorage.setItem(KEY_USER, JSON.stringify(obj));
-  }
-  function loadUser(){
-    const s = localStorage.getItem(KEY_USER);
-    return s ? JSON.parse(s) : null;
-  }
-
-  function saveScores(scores){
-    localStorage.setItem(KEY_SCORES, JSON.stringify(scores));
-  }
-  function loadScores(){
-    const s = localStorage.getItem(KEY_SCORES);
-    return s ? JSON.parse(s) : {module1:0,module2:0,module3:0};
-  }
-
-  function addToLeaderboard(entry){
-    let lb = JSON.parse(localStorage.getItem(KEY_LEADER) || "[]");
-    lb.push(entry);
-    // keep top 50 by score desc
-    lb.sort((a,b)=>b.total - a.total);
-    lb = lb.slice(0,50);
-    localStorage.setItem(KEY_LEADER, JSON.stringify(lb));
-  }
-  function loadLeaderboard(){ return JSON.parse(localStorage.getItem(KEY_LEADER) || "[]"); }
-
-  function ensureUser(name,klass){
-    const user = {name:name, class:klass, created: new Date().toISOString(), badges:[]};
-    saveUser(user);
-    return user;
-  }
-
-  function giveBadge(badgeId){
-    const u = loadUser();
-    if(!u) return;
-    if(!u.badges.includes(badgeId)) {
-      u.badges.push(badgeId);
-      saveUser(u);
+    if (!name || !grade) {
+        alert("Please enter your name and class!");
+        return;
     }
-  }
 
-  return {saveUser, loadUser, ensureUser, saveScores, loadScores, addToLeaderboard, loadLeaderboard, giveBadge};
-})();
+    localStorage.setItem("studentName", name);
+    localStorage.setItem("studentClass", grade);
+
+    window.location.href = "module1.html";
+}
+
+// Load student name on each page
+function loadStudentName() {
+    const name = localStorage.getItem("studentName");
+    if (name) {
+        document.getElementById("welcomeUser").textContent = name;
+    }
+}
+
+// Save score for modules
+function saveScore(module, score) {
+    localStorage.setItem(module + "-score", score);
+}
+
+// Get score
+function getScore(module) {
+    return localStorage.getItem(module + "-score") || 0;
+}
+
+// Award badges
+function awardBadge(badgeName) {
+    localStorage.setItem("badge-" + badgeName, "earned");
+}
