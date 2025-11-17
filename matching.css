@@ -1,23 +1,24 @@
 body {
-    font-family: Arial, sans-serif;
-    background: #f5f7ff;
-    margin: 0;
-    padding: 0;
+    font-family: Poppins, sans-serif;
+    background: linear-gradient(120deg, #a1c4fd, #c2e9fb);
     text-align: center;
+    padding: 30px;
 }
 
 h1 {
-    background: #4a90e2;
+    background: #0057b7;
     color: white;
-    padding: 20px;
-    margin: 0;
+    padding: 15px;
+    border-radius: 10px;
+    width: 80%;
+    margin: auto;
 }
 
-.game-container {
-    margin-top: 30px;
+.container {
     display: flex;
     justify-content: center;
-    gap: 50px;
+    margin-top: 30px;
+    gap: 40px;
 }
 
 .column {
@@ -25,48 +26,55 @@ h1 {
 }
 
 .column h2 {
-    background: #6ab04c;
-    color: white;
-    padding: 10px;
-    border-radius: 10px;
+    color: #003f82;
+    margin-bottom: 10px;
 }
 
-.word, .definition {
+.list {
     background: white;
-    padding: 15px;
-    margin: 10px;
+    padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    min-height: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.item {
+    background: #eef4ff;
+    margin: 8px;
+    padding: 12px;
+    border-radius: 8px;
     cursor: pointer;
-}
-
-.word.selected, .definition.selected {
-    background: #ffeaa7;
-    border: 2px solid #fdcb6e;
-}
-
-.correct {
-    background: #55efc4 !important;
-}
-
-.incorrect {
-    background: #fab1a0 !important;
-}
-
-.button-container {
-    margin-top: 20px;
-}
-
-button {
-    padding: 12px 20px;
     font-size: 18px;
-    background: #0984e3;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
+    transition: 0.3s;
 }
 
-button:hover {
-    background: #74b9ff;
+.item:hover {
+    background: #d5e6ff;
+}
+
+/* Highlight selected */
+.selected {
+    border: 2px solid #007bff;
+    background: #d7eaff;
+}
+
+/* Correct match */
+.correct {
+    background: #b8ffcc !important;
+    border: 2px solid green !important;
+    color: green;
+}
+
+/* Wrong match */
+.wrong {
+    background: #ffb3b3 !important;
+    border: 2px solid red !important;
+    color: red;
+}
+
+.result {
+    margin-top: 25px;
+    font-size: 26px;
+    font-weight: bold;
+    color: #004aad;
 }
