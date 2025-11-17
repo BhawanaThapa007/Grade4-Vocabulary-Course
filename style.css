@@ -1,55 +1,105 @@
-/* style.css - shared modern clean theme */
-:root{
-  --bg1:#f4f7ff; --accent:#2f63d5; --accent-2:#00a86b; --card:#ffffff; --muted:#6b7280;
+/* General Page Styling */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: #f5f9ff;
+    color: #2b2b2b;
 }
-*{box-sizing:border-box}
-body{
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  margin:0;background:linear-gradient(180deg,var(--bg1),#e6f0ff);color:#111;
+
+/* Center Container */
+.container {
+    width: 90%;
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
 }
-.container{max-width:980px;margin:36px auto;padding:20px}
-.card{
-  background:var(--card);border-radius:14px;padding:22px;box-shadow:0 8px 24px rgba(16,24,40,0.06);margin-bottom:18px;
+
+/* Modern Heading Style */
+h1, h2 {
+    text-align: center;
+    color: #1a73e8;
+    margin-bottom: 10px;
 }
-.header{
-  display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 12px 20px;
+    background: #1a73e8;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
 }
-.brand{display:flex;align-items:center;gap:12px}
-.logo{width:56px;height:56px;background:linear-gradient(135deg,var(--accent),#6a9cff);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
-.title{font-size:20px;font-weight:700}
-.subtitle{color:var(--muted);font-size:14px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:12px}
-.btn{display:inline-block;padding:10px 16px;border-radius:10px;background:var(--accent);color:#fff;text-decoration:none;font-weight:600;cursor:pointer;border:none}
-.btn.alt{background:#fff;color:var(--accent);border:2px solid rgba(47,99,213,0.12)}
-.small{font-size:13px;color:var(--muted)}
-.module-card{padding:18px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfdff);text-align:left}
-.module-card h3{margin:0 0 8px 0;color:var(--accent)}
-.module-card p{margin:0;color:var(--muted);font-size:14px}
-.input{width:100%;padding:12px;border-radius:10px;border:1px solid #e6eefc}
-.row{display:flex;gap:12px;align-items:center;margin-top:12px}
 
-/* Flashcard & matching */
-.flash-area{display:flex;flex-direction:column;align-items:center;gap:14px}
-.flashcard-container{perspective:1000px}
-.flashcard{width:300px;height:160px;position:relative;transform-style:preserve-3d;transition:transform .6s;cursor:pointer;border-radius:12px}
-.flashcard.flip{transform:rotateY(180deg)}
-.side{position:absolute;inset:0;border-radius:12px;display:flex;align-items:center;justify-content:center;padding:18px;font-size:20px}
-.front{background:linear-gradient(135deg,var(--accent),#6a9cff);color:#fff}
-.back{background:#fff;color:#111;border:1px solid #eef4ff;transform:rotateY(180deg)}
-.controls{display:flex;gap:8px;align-items:center}
+.btn:hover {
+    background: #155bb5;
+}
 
-/* Matching */
-.match-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-top:12px}
-.match-item{background:#fff;padding:12px;border-radius:10px;border:1px dashed #e6eefc;text-align:center;cursor:pointer}
-.match-target{background:#f7fbff;padding:14px;border-radius:10px;border:2px dashed #dfeeff;min-height:56px}
+/* Flashcard Styling */
+.flashcard {
+    width: 90%;
+    max-width: 350px;
+    margin: 20px auto;
+    padding: 25px;
+    text-align: center;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    font-size: 22px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
 
-/* Quiz */
-.quiz-option{background:#fff;padding:12px;border-radius:10px;border:1px solid #eef4ff;margin-top:10px;cursor:pointer}
+.flashcard:hover {
+    transform: scale(1.03);
+}
 
-/* badges */
-.badge{display:inline-block;padding:12px;border-radius:12px;background:linear-gradient(90deg,#fff,#f7fbff);border:1px solid #eef4ff;margin:8px;font-weight:700}
-.badge.earned{animation:pop .6s ease;transform-origin:center}
-@keyframes pop{0%{transform:scale(.6)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+/* Matching Game Grid */
+.match-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
 
-/* responsive */
-@media (max-width:640px){.flashcard{width:90%}}
+.match-item {
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
+.match-item.correct {
+    background: #c8f7c5;
+}
+
+.match-item.wrong {
+    background: #f8d7da;
+}
+
+/* Badge Circle */
+.badge {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: gold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    font-size: 22px;
+    font-weight: bold;
+    box-shadow: 0 0 12px gold;
+    animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 5px gold; }
+    to { box-shadow: 0 0 25px gold; }
+}
