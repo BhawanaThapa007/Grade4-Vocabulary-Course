@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Badges — Vocabulary Quest</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.badge-container { display:flex; gap:16px; flex-wrap:wrap; padding:20px; justify-content:center;}
+.badge { width:120px; height:120px; border-radius:12px; background:#f0f0f0; display:flex;align-items:center;justify-content:center; flex-direction:column; opacity:0.4; transform:scale(0.95); transition:all .35s; border:2px solid #ddd;}
+.badge.unlocked { opacity:1; transform:scale(1); box-shadow:0 8px 18px rgba(0,0,0,0.12); border-color:#ffb347;}
+.badge .title { font-weight:700; margin-top:6px; font-size:0.9rem;}
+.badge-owner { font-size:0.75rem; margin-top:6px; color:#333; }
+.confetti { position:fixed; pointer-events:none; top:0; left:0; right:0; bottom:0; z-index:9999; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Badges</h1>
+  <div id="welcomeName"></div>
+  <nav><a href="index.html">Course Home</a><a href="leaderboard.html">Leaderboard</a></nav>
+</header>
+
+<main>
+  <section>
+    <div class="badge-container" id="badgesWrap">
+      <div class="badge" id="badge_explorer">
+        <div class="icon">🧭</div><div class="title">Explorer</div>
+      </div>
+      <div class="badge" id="badge_action">
+        <div class="icon">⚡</div><div class="title">Action Hero</div>
+      </div>
+      <div class="badge" id="badge_story">
+        <div class="icon">📚</div><div class="title">Story Master</div>
+      </div>
+      <div class="badge" id="badge_creator">
+        <div class="icon">✍️</div><div class="title">Creator</div>
+      </div>
+      <div class="badge" id="badge_master">
+        <div class="icon">🎖️</div><div class="title">Word Master</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="confetti" id="confetti"></div>
+
+<script src="script.js"></script>
+<script>
+// simple confetti function (no external lib)
+function burstConfetti(){
+  const wrap = document.getElementById('confetti');
+  wrap.innerHTML = '';
+  for(let i=0;i<40;i++){
+    const d = document.createElement('div');
+    d.style.position='absolute';
+    d.style.left = Math.random()*100 + '%';
+    d.style.top = Math.random()*100 + '%';
+    d.style.width='10px'; d.style.height='10px';
+    d.style.background = ['#ff7675','#74b9ff','#ffeaa7','#55efc4'][Math.floor(Math.random()*4)];
+    d.style.opacity = Math.random()*0.9+0.2;
+    d.style.transform = `rotate(${Math.random()*360}deg)`;
+    wrap.appendChild(d);
+    setTimeout(()=> d.remove(), 2500);
+  }
+}
+
+// Load badges for current user
+function loadBadgesUI(){
+  const u = getCurrentUser();
+  if(u.name) document.getElementById('welcomeName').textContent = `Hey, ${u.name}!`;
+  if(!u.key) return;
+  const BADGE_KEY = `vq_badges_${u.key}`;
+  const raw = localStorage.getItem(BADGE_KEY);
+  const badges = raw ? JSON.parse(raw) : {};
+  Object.keys(badges).forEach(bid => {
+    const el = document.getElementById(bid);
+    if(el){
+      el.classList.add('unlocked');
+      // show owner label
+      const label = document.createElement('div');
+      label.className = 'badge-owner';
+      label.textContent = `${u.name} earned this`;
+      el.appendChild(label);
+    }
+  });
+}
+// Listen for unlock events to animate
+window.addEventListener('badgeUnlocked', (e)=>{
+  const id = e.detail.badgeId;
+  const el = document.getElementById(id);
+  if(el){
+    el.classList.add('unlocked');
+    burstConfetti();
+    const u = getCurrentUser();
+    const label = document.createElement('div');
+    label.className='badge-owner'; label.textContent = `${u.name} earned this`;
+    el.appendChild(label);
+  }
+});
+
+window.addEventListener('load', loadBadgesUI);
+</script>
+</body>
+</html>
