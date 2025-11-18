@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Certificate</title><link rel="stylesheet" href="style.css">
+<style>.cert{width:800px;margin:20px auto;padding:30px;border:6px solid #2c3e50;text-align:center;background:#fff}.cert h1{margin:0}</style>
+</head>
+<body>
+<header><h1>Certificate</h1><nav><a href="index.html">Course Home</a></nav></header>
+<main>
+  <div style="max-width:900px;margin:auto">
+    <label>Student: <input id="studentName" /></label>
+    <label>Date: <input type="date" id="date" /></label>
+    <button onclick="renderCert()">Render Certificate</button>
+    <button onclick="window.print()">Print</button>
+    <div id="certWrap"></div>
+  </div>
+</main>
+
+<script src="script.js"></script>
+<script>
+window.addEventListener('load', ()=>{
+  const u = getCurrentUser();
+  if(u.name) document.getElementById('studentName').value = u.name;
+  document.getElementById('date').value = new Date().toISOString().slice(0,10);
+});
+function renderCert(){
+  const name = document.getElementById('studentName').value || 'Student';
+  const date = document.getElementById('date').value;
+  const html = `<div class="cert"><h1>Certificate of Completion</h1><p>This certifies that</p><h2>${name}</h2><p>has completed <strong>The Vocabulary Quest</strong></p><p>on ${date}</p><div style="text-align:right;margin-top:24px">Instructor: Bhawana Thapa</div></div>`;
+  document.getElementById('certWrap').innerHTML = html;
+}
+</script>
+</body>
+</html>
