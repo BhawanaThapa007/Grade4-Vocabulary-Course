@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Module1 — Matching</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="module1.css">
+  <script src="module1.js" defer></script>
+</head>
+<body onload="initMatching()">
+  <div class="container">
+    <div class="module-header">
+      <div class="brand"><div class="logo">M1</div><div><div class="title">Matching Game</div><div class="subtitle small">Click word → click meaning</div></div></div>
+      <div><a class="btn alt" href="index.html">Back</a></div>
+    </div>
+
+    <div class="card">
+      <h3>Match words to meanings</h3>
+      <div class="match-grid">
+        <div id="left" class="match-list"></div>
+        <div id="right" class="match-list"></div>
+      </div>
+      <div style="margin-top:12px" class="center">
+        <button class="btn" onclick="restartMatching()">Restart</button>
+        <button class="btn alt" onclick="submitMatching()">Submit</button>
+      </div>
+
+      <p id="matchMsg" class="footer-note"></p>
+    </div>
+  </div>
+
+<script>
+/* Matching data same as flashcards */
+const MATCH_WORDS = [
+  {w:"observe", m:"to watch carefully"},
+  {w:"predict", m:"to say what will happen"},
+  {w:"gigantic", m:"very large"},
+  {w:"protect", m:"to keep safe"},
+  {w:"collect", m:"to gather items"},
+  {w:"confident", m:"sure of yourself"}
+];
+
+let curPairs = [];
+let selectedWordEl = null;
+let selectedMeaningEl = null;
+
+function shuffleArr(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]] } return a; }
+
+function initMatching(){
+  restartMatching();
+}
+
+function restartMatching(){
+  selectedWordEl=null; selectedMeaningEl=null; curPairs = shuffleArr([...MATCH_WORDS]);
+  const left = document.getElementById('left'); const right = document.getElementById('right');
+  left.innerHTML=''; right.innerHTML='';
+  const words = shuffleArr(curPairs.map(x=>x.w));
+  const meanings = shuffleArr(curPairs.map(x=>x.m));
+
+  words.forEach(w=>{
+    const d = document.createElement('div'); d.className='match-item'; d.textContent=w; d.onclick = ()=> selectWord(d,w); left.appendChild(d);
+  });
+  meanings.forEach(m=>{
+    const d = document.createElement('div'); d.className='match-item'; d.textContent=m; d.onclick = ()=> selectMeaning(d,m); right.appendChild(d);
+  });
+  document.getElementById('matchMsg').textContent='';
+}
+
+function selectWord(el, word){
+  if(el.classList.contains('correct')) return;
+  document.querySelectorAll('.match-item').forEach(x=>x.classList.remove('selected'));
+  selectedWordEl = el; el.classList.add('selected');
+  tryCheck();
+}
+function selectMeaning(el, meaning){
+  if(el.classList.contains('correct')) return;
+  document.querySelectorAll('.match-item').forEach(x=>x.classList.remove('selected'));
+  selectedMeaningEl = el; el.classList.add('selected');
+  tryCheck();
+}
+
+function tryCheck(){
+  if(!selectedWordEl || !selectedMeaningEl) return;
+  const w = selectedWordEl.textContent.trim();
+  const m = selectedMeaningEl.textContent.trim();
+  const pair = MATCH_WORDS.find(p=>p.w===w && p.m===m);
+  if(pair){
+    selectedWordEl.classList.add('correct'); selectedMeaningEl.classList.add('correct');
+    selectedWordEl.onclick = null; selectedMeaningEl.onclick = null;
+    document.getElementById('matchMsg').textContent = '✓ Good! That pair is correct.';
+  } else {
+    selectedWordEl.classList.add('wrong'); selectedMeaningEl.classList.add('wrong');
+    setTimeout(()=>{ selectedWordEl.classList.remove('wrong','selected'); selectedMeaningEl.classList.remove('wrong','selected'); },700);
+    document.getElementById('matchMsg').textContent = '✖ Not a match — try again.';
+  }
+  selectedWordEl=null; selectedMeaningEl=null;
+}
+
+function submitMatching(){
+  const correct = document.querySelectorAll('.match-item.correct').length / 2;
+  const total = MATCH_WORDS.length;
+  const score = Math.round((correct/total)*100);
+  document.getElementById('matchMsg').textContent = `You matched ${correct} of ${total} pairs — score ${score}%`;
+  if(score >= 80) { M1.awardBadge('module1_matcher'); const s = M1.loadScores(); s.module1 = Math.max(s.module1||0, 80); M1.saveScores(s); }
+}
+</script>
+</body>
+</html>
