@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Module1 — Quiz</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="module1.css">
+  <script src="module1.js" defer></script>
+</head>
+<body onload="initQuiz()">
+  <div class="container">
+    <div class="module-header">
+      <div class="brand"><div class="logo">M1</div><div><div class="title">Quick Quiz</div><div class="subtitle small">5 questions</div></div></div>
+      <div><a class="btn alt" href="index.html">Back</a></div>
+    </div>
+
+    <div class="card">
+      <div id="quizArea"></div>
+      <div style="margin-top:12px" class="center">
+        <button class="btn" onclick="submitQuiz()">Submit Answers</button>
+      </div>
+      <p id="quizMsg" class="footer-note"></p>
+    </div>
+  </div>
+
+<script>
+const QUIZ = [
+  {q:"What does 'observe' mean?", opts:["To watch carefully","To move quickly","To sleep"], a:"To watch carefully"},
+  {q:"What is 'gigantic'?", opts:["Very small","Very large","Very noisy"], a:"Very large"},
+  {q:"To 'protect' means?", opts:["To keep safe","To lose","To forget"], a:"To keep safe"},
+  {q:"'Collect' means?", opts:["To break","To gather items","To ignore"], a:"To gather items"},
+  {q:"'Confident' describes someone who is?", opts:["Unsure","Shy","Sure of themselves"], a:"Sure of themselves"}
+];
+
+function initQuiz(){
+  const area = document.getElementById('quizArea');
+  area.innerHTML='';
+  QUIZ.forEach((item,i)=>{
+    const div = document.createElement('div');
+    div.innerHTML = `<div style="font-weight:700">${i+1}. ${item.q}</div>`;
+    item.opts.forEach(opt=>{
+      const id = `q${i}_${opt.replace(/\s+/g,'_')}`;
+      div.innerHTML += `<label class="quiz-option"><input type="radio" name="q${i}" value="${opt}"> ${opt}</label>`;
+    });
+    area.appendChild(div);
+  });
+}
+
+function submitQuiz(){
+  let score=0;
+  QUIZ.forEach((it,i)=>{
+    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+    if(sel && sel.value===it.a) score++;
+  });
+  document.getElementById('quizMsg').textContent = `You scored ${score} / ${QUIZ.length}`;
+
+  // Save in module1 score: scale 0-100
+  const pct = Math.round((score/QUIZ.length)*100);
+  const s = M1.loadScores(); s.module1 = Math.max(s.module1 || 0, pct); M1.saveScores(s);
+  if(pct >= 80) { M1.awardBadge('module1_quizmaster'); }
+}
+</script>
+</body>
+</html>
