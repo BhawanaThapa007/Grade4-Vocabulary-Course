@@ -1,0 +1,36 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Module 3 Quiz</title><link rel="stylesheet" href="../styles.css"></head><body>
+<header><h1>Module 3 — Quiz</h1><nav><a href="intro.html">Intro</a><a href="activity.html">Activity</a></nav></header>
+<main>
+  <section>
+    <h2>Comprehension Quiz</h2>
+    <p>1. Where did Raju read the book?</p>
+    <label><input type="radio" name="q1" value="classroom"> Classroom</label><br>
+    <label><input type="radio" name="q1" value="garden"> Garden</label><br>
+
+    <p>2. What did Raju carry?</p>
+    <label><input type="radio" name="q2" value="backpack"> Backpack</label><br>
+    <label><input type="radio" name="q2" value="bag"> Bag</label><br>
+
+    <button onclick="grade()">Submit</button>
+  </section>
+</main>
+
+<script>
+function grade(){
+  let score=0;
+  if(document.querySelector('input[name=q1]:checked')?.value === 'classroom') score++;
+  if(document.querySelector('input[name=q2]:checked')?.value === 'backpack') score++;
+  const percent = Math.round((score/2)*100);
+  localStorage.setItem('module3Score', percent);
+  // push to leaderboard
+  const KEY = 'vq_leaderboard_v1';
+  const name = 'Bhawana Thapa';
+  const raw = localStorage.getItem(KEY); const board = raw?JSON.parse(raw):[];
+  const ex = board.find(b=>b.name===name);
+  if(ex) ex.score = Math.max(ex.score, percent);
+  else board.push({name, score:percent});
+  localStorage.setItem(KEY, JSON.stringify(board));
+  alert('You scored '+percent+'% on Module 3 quiz.');
+}
+</script>
+</body></html>
