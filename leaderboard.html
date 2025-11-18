@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Leaderboard — Vocabulary Quest</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Leaderboard</h1>
+  <div id="welcomeName"></div>
+  <nav><a href="index.html">Course Home</a></nav>
+</header>
+
+<main>
+  <section>
+    <h2>Top Learners</h2>
+    <table id="leaderboard" border="1" style="width:80%;margin:auto;">
+      <thead><tr><th>Rank</th><th>Name</th><th>Best Score</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+</main>
+
+<script src="script.js"></script>
+<script>
+function renderLeaderboard(){
+  const KEY = 'vq_leaderboard_v1';
+  const raw = localStorage.getItem(KEY);
+  const board = raw ? JSON.parse(raw) : [];
+  board.sort((a,b)=> (b.best||0) - (a.best||0) || b.updated - a.updated);
+  const tbody = document.querySelector('#leaderboard tbody');
+  tbody.innerHTML = '';
+  board.forEach((p,i)=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${i+1}</td><td>${p.name}</td><td>${p.best||0}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+window.addEventListener('load', ()=>{
+  const u = getCurrentUser();
+  if(u.name) document.getElementById('welcomeName').textContent = `Welcome, ${u.name}!`;
+  renderLeaderboard();
+});
+</script>
+</body>
+</html>
