@@ -1,26 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Module 3: Review & Mastery</title>
-  <link rel="stylesheet" href="../styles.css">
-</head>
+<head><meta charset="utf-8"><title>Module 3: Words in Stories</title><link rel="stylesheet" href="../styles.css"></head>
 <body>
   <header>
-    <h1>Module 3: Review & Mastery</h1>
+    <h1>Module 3 — Words in Stories</h1>
     <nav>
-      <a href="intro.html">Intro</a>
-      <a href="leaderboard.html">Leaderboard</a>
-      <a href="badges.html">Badges</a>
-      <a href="ai-feedback.html">AI Feedback</a>
+      <a href="../course1/index.html">Course Home</a>
+      <a href="activity.html">Activity</a>
+      <a href="quiz.html">Quiz</a>
     </nav>
   </header>
-
   <main>
-    <section id="intro">
-      <h2>Welcome!</h2>
-      <p>In this module, you’ll review all the words you’ve learned, earn badges, check the leaderboard, and get AI feedback on your progress. 
-      Let’s master these words!</p>
+    <section>
+      <h2>Goals</h2>
+      <p>Read short stories, find vocabulary, do a scavenger hunt, and complete a comprehension quiz.</p>
     </section>
   </main>
 </body>
