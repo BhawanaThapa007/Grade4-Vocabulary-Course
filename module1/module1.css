@@ -1,0 +1,43 @@
+/* module1/module1.css — module-specific styles (modern clean) */
+:root { --accent:#2f63d5; --accent2:#00a86b; --muted:#6b7280; --card:#ffffff; }
+
+*{box-sizing:border-box}
+body{font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial; margin:0; background:linear-gradient(180deg,#f4f7ff,#e9f6ff); color:#111}
+.container{max-width:980px;margin:36px auto;padding:20px}
+.module-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:56px;height:56px;background:linear-gradient(135deg,var(--accent),#6a9cff);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px}
+.title{font-size:20px;font-weight:700}
+.subtitle{color:var(--muted);font-size:14px}
+.card{background:var(--card);border-radius:14px;padding:20px;margin-bottom:18px;box-shadow:0 8px 24px rgba(16,24,40,0.06)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:12px}
+.btn{display:inline-block;padding:10px 16px;border-radius:10px;background:var(--accent);color:#fff;text-decoration:none;font-weight:600;cursor:pointer;border:none}
+.btn.alt{background:#fff;color:var(--accent);border:2px solid rgba(47,99,213,0.12)}
+.small{font-size:13px;color:var(--muted)}
+
+/* Flashcard */
+.flash-wrap{text-align:center}
+.flashcard{width:320px;height:180px;margin:12px auto;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--accent),#6a9cff);cursor:pointer;perspective:1000px;position:relative}
+.flashcard .inner{transition:transform .6s;transform-style:preserve-3d;position:absolute;inset:0}
+.flashcard.flip .inner{transform:rotateY(180deg)}
+.side{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;border-radius:14px;padding:18px;backface-visibility:hidden}
+.front{color:#fff}
+.back{background:#fff;color:#111;border:1px solid #eef4ff;transform:rotateY(180deg);font-size:16px;font-weight:600}
+
+/* Matching */
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.match-list{background:#fff;padding:12px;border-radius:10px;min-height:220px;box-shadow:0 6px 16px rgba(0,0,0,0.06)}
+.match-item{padding:12px;margin:8px;border-radius:10px;background:#f7fbff;border:1px solid #e8f2ff;cursor:pointer}
+.match-item.selected{border:2px solid var(--accent);background:#eaf1ff}
+.match-item.correct{background:#dff7e6;border-color:#60bf8a}
+.match-item.wrong{background:#ffdfe1;border-color:#ff8b8b}
+
+/* Quiz */
+.quiz-option{margin:10px 0;padding:12px;border-radius:10px;background:#fff;border:1px solid #eef4ff;cursor:pointer}
+.quiz-option.correct{background:#e6ffef;border-color:#bdeacb}
+.quiz-option.wrong{background:#fff0f0;border-color:#ffbcbc}
+
+/* small helpers */
+.center{text-align:center}
+.footer-note{font-size:13px;color:var(--muted);margin-top:16px;text-align:center}
+@media (max-width:640px){ .flashcard{width:90%;height:160px;font-size:22px} }
