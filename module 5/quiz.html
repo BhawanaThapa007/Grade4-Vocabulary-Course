@@ -1,0 +1,31 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Module 5 Quiz</title><link rel="stylesheet" href="../styles.css"></head><body>
+<header><h1>Module 5 — Final Check</h1><nav><a href="intro.html">Intro</a><a href="activity.html">Activity</a></nav></header>
+<main>
+  <section>
+    <h2>Short Check — fill in missing word</h2>
+    <p>1. The student carried a <input id="a1" size="10"> to class.</p>
+    <p>2. The teacher read a <input id="a2" size="10"> to the class.</p>
+    <button onclick="grade()">Submit</button>
+  </section>
+</main>
+
+<script>
+function grade(){
+  const a1 = (document.getElementById('a1').value||'').toLowerCase().trim();
+  const a2 = (document.getElementById('a2').value||'').toLowerCase().trim();
+  let c=0;
+  if(a1==='backpack') c++;
+  if(a2==='story') c++;
+  const percent = Math.round((c/2)*100);
+  localStorage.setItem('module5Score', percent);
+  const KEY = 'vq_leaderboard_v1';
+  const name = 'Bhawana Thapa';
+  const raw = localStorage.getItem(KEY); const board = raw?JSON.parse(raw):[];
+  const ex = board.find(b=>b.name===name);
+  if(ex) ex.score = Math.max(ex.score, percent);
+  else board.push({name, score:percent});
+  localStorage.setItem(KEY, JSON.stringify(board));
+  alert('You scored '+percent+'% on the check.');
+}
+</script>
+</body></html>
