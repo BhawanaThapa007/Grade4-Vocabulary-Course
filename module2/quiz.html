@@ -24,4 +24,34 @@
         </section>
     </main>
 </body>
-</html>
+</html><section id="quiz">
+    <h2>Quiz: Choose the Correct Word</h2>
+    
+    <p>1. Rina went to the _____ with her friends.</p>
+    <input type="radio" name="q1" id="q1a" value="park"><label for="q1a">Park</label><br>
+    <input type="radio" name="q1" id="q1b" value="school"><label for="q1b">School</label><br>
+    <input type="radio" name="q1" id="q1c" value="market"><label for="q1c">Market</label><br>
+
+    <p>2. They ate delicious _____ under the tree.</p>
+    <input type="radio" name="q2" id="q2a" value="sandwiches"><label for="q2a">Sandwiches</label><br>
+    <input type="radio" name="q2" id="q2b" value="apples"><label for="q2b">Apples</label><br>
+    <input type="radio" name="q2" id="q2c" value="cookies"><label for="q2c">Cookies</label><br>
+
+    <p>3. A _____ flew over the flowers.</p>
+    <input type="radio" name="q3" id="q3a" value="butterfly"><label for="q3a">Butterfly</label><br>
+    <input type="radio" name="q3" id="q3b" value="bird"><label for="q3b">Bird</label><br>
+    <input type="radio" name="q3" id="q3c" value="bee"><label for="q3c">Bee</label><br>
+
+    <button onclick="checkAnswers()">Submit Answers</button>
+</section>
+
+<script>
+function checkAnswers() {
+    let score = 0;
+    if (document.getElementById('q1a').checked) score++;
+    if (document.getElementById('q2a').checked) score++;
+    if (document.getElementById('q3a').checked) score++;
+    alert(`You got ${score} out of 3 correct!`);
+}
+</script>
+
