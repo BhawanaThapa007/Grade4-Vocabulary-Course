@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Module 3 Activity</title><link rel="stylesheet" href="../styles.css"></head>
+<body>
+  <header><h1>Module 3 — Reading Activity</h1><nav><a href="intro.html">Intro</a><a href="quiz.html">Quiz</a></nav></header>
+  <main>
+    <section>
+      <h2>Short Story</h2>
+      <p>Raju walked into the <strong>classroom</strong> carrying a heavy <strong>backpack</strong>. He opened his <strong>notebook</strong> and began to read the new <strong>book</strong> about space.</p>
+
+      <h3>Find & Type — Type 4 words you find in the story:</h3>
+      <input id="word1" placeholder="word 1">
+      <input id="word2" placeholder="word 2">
+      <input id="word3" placeholder="word 3">
+      <input id="word4" placeholder="word 4">
+      <button onclick="submitFound()">Submit</button>
+    </section>
+  </main>
+
+<script>
+function submitFound(){
+  const answers = ['classroom','backpack','notebook','book'];
+  let count = 0;
+  for(let i=1;i<=4;i++){
+    const v = (document.getElementById('word'+i).value || '').toLowerCase().trim();
+    if(answers.includes(v)) count++;
+  }
+  const score = Math.round((count/4)*100);
+  localStorage.setItem('module3Score', score);
+  // write to leaderboard store (simple)
+  const KEY = 'vq_leaderboard_v1';
+  const name = 'Bhawana Thapa';
+  const raw = localStorage.getItem(KEY); const board = raw?JSON.parse(raw):[];
+  const ex = board.find(b=>b.name===name);
+  if(ex) ex.score = Math.max(ex.score, score);
+  else board.push({name, score});
+  localStorage.setItem(KEY, JSON.stringify(board));
+  alert('You found '+count+' / 4 words — score saved: '+score);
+}
+</script>
+</body></html>
