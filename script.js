@@ -36,3 +36,45 @@ function getScore(module) {
 function awardBadge(badgeName) {
     localStorage.setItem("badge-" + badgeName, "earned");
 }
+// ===== VQ Shared Utilities =====
+function getCurrentUser(){
+  const name = localStorage.getItem('vq_user_name') || null;
+  const key = localStorage.getItem('vq_user_key') || (name ? name.replace(/\s+/g,'_').toLowerCase() : null);
+  return { name, key };
+}
+
+// Save per-user score to leaderboard. moduleId like 'module1'
+function saveScoreToLeaderboard(moduleId, score){
+  if(!moduleId) return;
+  const user = getCurrentUser();
+  const name = user.name || 'Anonymous';
+  const key = user.key || ('anon_' + Date.now());
+  const KEY = 'vq_leaderboard_v1';
+  const raw = localStorage.getItem(KEY);
+  const board = raw ? JSON.parse(raw) : [];
+
+  let entry = board.find(e => e.key === key);
+  if(!entry){
+    entry = { name, key, moduleScores: {}, best: score, updated: Date.now() };
+    board.push(entry);
+  }
+  entry.moduleScores[moduleId] = score;
+  entry.best = Math.max(entry.best || 0, score);
+  entry.updated = Date.now();
+
+  localStorage.setItem(KEY, JSON.stringify(board));
+}
+
+// Unlock a badge for current user. badgeId should match DOM id on badges.html
+function unlockBadge(badgeId){
+  const user = getCurrentUser();
+  if(!user.key) return;
+  const BADGE_KEY = `vq_badges_${user.key}`;
+  const raw = localStorage.getItem(BADGE_KEY);
+  const badges = raw ? JSON.parse(raw) : {};
+  badges[badgeId] = { unlocked: true, time: Date.now() };
+  localStorage.setItem(BADGE_KEY, JSON.stringify(badges));
+  // notify badge UI (if open)
+  window.dispatchEvent(new CustomEvent('badgeUnlocked', { detail:{ badgeId } }));
+}
+
