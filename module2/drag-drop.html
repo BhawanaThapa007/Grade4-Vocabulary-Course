@@ -25,3 +25,57 @@
     </main>
 </body>
 </html>
+<section id="drag-drop">
+  <h2>Drag & Drop: Complete the Sentences</h2>
+
+  <p>Rina went to the <span class="drop" id="drop1"></span> with her friends.</p>
+  <p>They ate delicious <span class="drop" id="drop2"></span> under the tree.</p>
+  <p>A <span class="drop" id="drop3"></span> flew over the flowers.</p>
+
+  <h3>Drag these words:</h3>
+  <div id="words">
+    <span class="word" draggable="true" id="word1">park</span>
+    <span class="word" draggable="true" id="word2">sandwiches</span>
+    <span class="word" draggable="true" id="word3">butterfly</span>
+  </div>
+</section>
+
+<style>
+  .drop {
+    display: inline-block;
+    min-width: 100px;
+    padding: 5px;
+    border-bottom: 2px solid #000;
+  }
+  .word {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 5px;
+    background: #ffeb3b;
+    border: 1px solid #000;
+    cursor: grab;
+  }
+</style>
+
+<script>
+const words = document.querySelectorAll('.word');
+const drops = document.querySelectorAll('.drop');
+
+words.forEach(word => {
+  word.addEventListener('dragstart', e => {
+    e.dataTransfer.setData('text', word.id);
+  });
+});
+
+drops.forEach(drop => {
+  drop.addEventListener('dragover', e => e.preventDefault());
+  drop.addEventListener('drop', e => {
+    e.preventDefault();
+    const wordId = e.dataTransfer.getData('text');
+    const wordEl = document.getElementById(wordId);
+    drop.textContent = wordEl.textContent;
+    drop.style.color = 'green';
+    wordEl.style.visibility = 'hidden';
+  });
+});
+</script>
