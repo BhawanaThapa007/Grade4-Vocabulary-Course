@@ -29,3 +29,10 @@ function grade(){
 }
 </script>
 </body></html>
+// after grading:
+saveScoreToLeaderboard('module1', percent);
+
+// mark module completed (for badges)
+if(percent >= 50) localStorage.setItem('module1Complete', 'true'); // optional per-module flag
+// unlock module badge for the current user:
+unlockBadge('badge_explorer'); // badge id must match element id in badges.html
