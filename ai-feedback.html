@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>AI Feedback — Vocabulary Quest</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>AI Feedback</h1>
+  <div id="welcomeName"></div>
+  <nav><a href="index.html">Course Home</a><a href="leaderboard.html">Leaderboard</a></nav>
+</header>
+
+<main>
+  <section style="max-width:760px;margin:auto">
+    <div id="feedbackText" style="padding:20px;background:#f6f8fb;border-radius:8px;">Generating feedback...</div>
+    <h3>Teacher notes</h3>
+    <textarea id="teacherNotes" rows="4" cols="70" placeholder="Teachers can store a short note"></textarea><br>
+    <button id="saveNotes">Save Notes</button>
+  </section>
+</main>
+
+<script src="script.js"></script>
+<script>
+function generatePersonalizedFeedback(){
+  const u = getCurrentUser();
+  if(u.name) document.getElementById('welcomeName').textContent = `Hello, ${u.name}!`;
+  const KEY = 'vq_leaderboard_v1';
+  const raw = localStorage.getItem(KEY);
+  const board = raw ? JSON.parse(raw) : [];
+  const entry = board.find(e => e.key === u.key) || { moduleScores: {} };
+  const scores = entry.moduleScores || {};
+  const vals = Object.values(scores);
+  const avg = vals.length ? Math.round(vals.reduce((a,b)=>a+b,0)/vals.length) : 0;
+  let msg = '';
+  if(avg >= 90) msg = `🌟 Amazing work, ${u.name}! You're a Vocabulary Champion. Keep mentoring others.`;
+  else if(avg >= 75) msg = `👍 Great job, ${u.name}! Strong vocabulary. Try creating a story using 10 new words.`;
+  else if(avg >= 50) msg = `🙂 Nice work, ${u.name}. Review the 5 words you missed most and try again.`;
+  else msg = `📚 Keep practicing, ${u.name}. Focus on reading the short stories & the drag-and-drop activities.`;
+  // list modules missing or weakest
+  if(vals.length){
+    const weakest = Object.keys(scores).reduce((a,b)=> scores[a] < scores[b] ? a : b);
+    msg += `<p>Tip: revisit ${weakest} and try the quiz again.</p>`;
+  }
+  document.getElementById('feedbackText').innerHTML = msg;
+}
+window.addEventListener('load', generatePersonalizedFeedback);
+document.getElementById('saveNotes').addEventListener('click', ()=>{
+  const u = getCurrentUser();
+  if(!u.key) return alert('No user');
+  const key = `vq_teacher_notes_${u.key}`;
+  localStorage.setItem(key, document.getElementById('teacherNotes').value);
+  alert('Notes saved');
+});
+</script>
+</body>
+</html>
