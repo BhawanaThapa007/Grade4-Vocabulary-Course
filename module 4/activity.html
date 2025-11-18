@@ -1,0 +1,43 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Module 4 Activity</title><link rel="stylesheet" href="../styles.css"></head><body>
+<header><h1>Module 4 — Collaborative Story</h1><nav><a href="intro.html">Intro</a><a href="quiz.html">Quiz</a></nav></header>
+<main>
+  <section>
+    <h2>Group Story Submission</h2>
+    <p>Write a short paragraph using as many target words as you can.</p>
+    <textarea id="story" rows="8" cols="70" placeholder="Type your group's story here..."></textarea><br>
+    <label>Submitted by: <input id="author" value="Bhawana Thapa"></label><br>
+    <button onclick="submitStory()">Submit Story</button>
+  </section>
+</main>
+
+<script>
+function submitStory(){
+  const txt = document.getElementById('story').value.trim();
+  const author = document.getElementById('author').value || 'Anonymous';
+  if(!txt){ alert('Please write a short story before submitting.'); return; }
+  // naive target-word count (you can tailor words list)
+  const targetWords = ['classroom','book','notebook','backpack','teacher','read','write','play','story','friend'];
+  const lower = txt.toLowerCase();
+  let used = 0;
+  targetWords.forEach(w=>{ if(lower.includes(w)) used++; });
+  // store story and achievements
+  const stories = JSON.parse(localStorage.getItem('writtenStory') || '[]');
+  stories.push({author, text: txt, used});
+  localStorage.setItem('writtenStory', JSON.stringify(stories));
+  // set authorsGuild flag if group used >= 3 words (example)
+  if(used >= 3) localStorage.setItem('authorsGuild', 'true');
+  // award score (example)
+  const score = Math.min(100, 40 + used*12);
+  localStorage.setItem('module4Score', score);
+  // update leaderboard
+  const KEY = 'vq_leaderboard_v1';
+  const name = author;
+  const raw = localStorage.getItem(KEY); const board = raw?JSON.parse(raw):[];
+  const ex = board.find(b=>b.name===name);
+  if(ex) ex.score = Math.max(ex.score, score);
+  else board.push({name, score});
+  localStorage.setItem(KEY, JSON.stringify(board));
+  alert('Story submitted. Words used: '+used+'. Score saved: '+score);
+}
+</script>
+</body></html>
