@@ -1,0 +1,30 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Module 4 Quiz</title><link rel="stylesheet" href="../styles.css"></head><body>
+<header><h1>Module 4 — Peer Review</h1><nav><a href="intro.html">Intro</a><a href="activity.html">Activity</a></nav></header>
+<main>
+  <section>
+    <h2>Peer Review Checklist</h2>
+    <p>Rate the story on:</p>
+    <label>Use of vocabulary (1-5): <input id="r1" type="number" min="1" max="5" value="4"></label><br>
+    <label>Creativity (1-5): <input id="r2" type="number" min="1" max="5" value="4"></label><br>
+    <button onclick="saveReview()">Save Review</button>
+  </section>
+</main>
+
+<script>
+function saveReview(){
+  const r1 = Number(document.getElementById('r1').value);
+  const r2 = Number(document.getElementById('r2').value);
+  const percent = Math.round(((r1 + r2) / 10) * 100);
+  localStorage.setItem('module4Score', percent);
+  // leaderboard update
+  const KEY = 'vq_leaderboard_v1';
+  const name = 'Bhawana Thapa';
+  const raw = localStorage.getItem(KEY); const board = raw?JSON.parse(raw):[];
+  const ex = board.find(b=>b.name===name);
+  if(ex) ex.score = Math.max(ex.score, percent);
+  else board.push({name, score:percent});
+  localStorage.setItem(KEY, JSON.stringify(board));
+  alert('Review saved. Score set to '+percent+'%');
+}
+</script>
+</body></html>
