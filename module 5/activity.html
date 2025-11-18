@@ -1,0 +1,33 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Module 5 Activity</title><link rel="stylesheet" href="../styles.css"></head><body>
+<header><h1>Module 5 — Pronunciation Practice</h1><nav><a href="intro.html">Intro</a><a href="quiz.html">Quiz</a></nav></header>
+<main>
+  <section>
+    <h2>Read Aloud — Self Assessment</h2>
+    <p>Read the list of words aloud and mark how many pronunciation errors you think you made (teacher will confirm later).</p>
+    <ul>
+      <li>classroom</li><li>backpack</li><li>notebook</li><li>teacher</li><li>story</li>
+    </ul>
+    <label>Number of pronunciation errors you made: <input id="errors" type="number" min="0" value="0"></label>
+    <button onclick="savePron()">Save Self-Assessment</button>
+  </section>
+</main>
+
+<script>
+function savePron(){
+  const errors = Number(document.getElementById('errors').value) || 0;
+  localStorage.setItem('module5Errors', errors);
+  // convert to a score: <=2 errors => mastery
+  const score = errors <=2 ? 100 : Math.max(0, 100 - errors*10);
+  localStorage.setItem('module5Score', score);
+  // push to leaderboard under name
+  const KEY = 'vq_leaderboard_v1';
+  const name = 'Bhawana Thapa';
+  const raw = localStorage.getItem(KEY); const board = raw?JSON.parse(raw):[];
+  const ex = board.find(b=>b.name===name);
+  if(ex) ex.score = Math.max(ex.score, score);
+  else board.push({name, score});
+  localStorage.setItem(KEY, JSON.stringify(board));
+  alert('Saved. Self-assessed errors: '+errors+'. Score: '+score);
+}
+</script>
+</body></html>
