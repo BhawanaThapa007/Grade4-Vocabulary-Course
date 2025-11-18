@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Module 3: AI Feedback</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <header>
+    <h1>AI Feedback</h1>
+    <nav>
+      <a href="intro.html">Intro</a>
+      <a href="leaderboard.html">Leaderboard</a>
+      <a href="badges.html">Badges</a>
+      <a href="ai-feedback.html">AI Feedback</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="ai-feedback">
+      <h2>Your Personalized Feedback</h2>
+      <p id="feedback-text">Loading feedback...</p>
+    </section>
+
+    <script>
+      const score = localStorage.getItem('moduleScore') || 0;
+      const feedback = document.getElementById('feedback-text');
+
+      if(score < 50) {
+        feedback.textContent = "Keep practicing! Focus on the words you find tricky.";
+      } else if(score < 75) {
+        feedback.textContent = "Good job! You’re improving, try reviewing the story sentences again.";
+      } else if(score < 90) {
+        feedback.textContent = "Great work! You have a strong grasp of the words.";
+      } else {
+        feedback.textContent = "Excellent! You’ve mastered all words in this module!";
+      }
+    </script>
+  </main>
+</body>
+</html>
